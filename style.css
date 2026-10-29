@@ -422,3 +422,44 @@ If it is, the gradient animation is switched off. This is an accessibility featu
     text-shadow: 0 0 10px #e7ecec, 0 0 20px #f2f3f3, 0 0 40px #f1f4f4;
   }
 }
+
+@media (max-width: 767px) {
+  /* shrink massive desktop heading to fit phone screen */
+  h1 {
+    font-size: 42px !important;
+    margin-bottom: 40px;
+  }
+
+  /* shrink font size for aurora gradient wrapper too */
+  .fx-aurora {
+    font-weight: 42px !important;
+  }
+
+  /* turn horizontal buttons into a single vertical column */
+  .button-container {
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    padding: 0 30px;
+  }
+
+  /* shrink the sizes of the emojis */
+  span {
+    font-size: 50px;
+  }
+
+  /* force buttons to shrink nicely across the mobile container */
+  .mood-button {
+    width: 100%;
+    max-width: 280px; /* prevents buttons from stretching too wide */
+    align-items: center; /* centers emojis and labels vertically stacked */
+    padding: 15px;
+  }
+
+  .page p{
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 0 20px;
+    margin-bottom: 20px;
+  }
+}
