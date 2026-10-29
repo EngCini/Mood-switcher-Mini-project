@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Mood Switcher</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Sofia&effect=neon|outline|emboss|shadow-multiple"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Permanent+Marker:regular"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Instrument+Sans:regular,500,600,700,italic,500italic,600italic,700italic"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Kalnia:100,200,300,regular,500,600,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Salsa:regular"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Ribeye:regular"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <section class="page active" id="intro-page">
+      <h1 class="fx-aurora fx-aurora-brand">What's your mood?</h1>
+      <!-- Parent container to hold all the buttons in a row -->
+      <div class="button-container">
+        <!-- Each button wraps both the emoji and its text label -->
+        <button class="mood-button" id="calm">
+          <span class="emoji">😌</span>
+          <span class="label">Calm</span>
+        </button>
+
+        <button class="mood-button" id="focused">
+          <span class="emoji">🤓</span>
+          <span class="label">Focused</span>
+        </button>
+
+        <button class="mood-button" id="happy">
+          <span class="emoji">🥰</span>
+          <span class="label">Happy</span>
+        </button>
+      </div>
+    </section>
+    <section class="page" id="second-page">
+      <span>😌</span>
+      <p>I'm as calm as the still waters.</p>
+      <button class="back-button" id="calm-button">Choose another mood</button>
+    </section>
+    <section class="page" id="third-page">
+      <span>🥰</span>
+      <p>I'm happy and radiant like the sunshine</p>
+      <button class="back-button" id="happy-button">Choose another mood</button>
+    </section>
+    <section class="page" id="fourth-page">
+      <span>🤓</span>
+      <p>Sorry, can't talk now! I'm too focused on my goals!</p>
+      <button class="back-button" id="focused-button">
+        Choose another mood
+      </button>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>

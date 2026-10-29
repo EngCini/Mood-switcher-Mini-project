@@ -1,0 +1,424 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  display: none; /* Hides pages by default */
+  flex-direction: column; /* Keeps text and buttons stacked correctly */
+  justify-content: center; /* Centers content vertically */
+  align-items: center;
+  opacity: 0; /* Prepares fade-in effect */
+  transition: opacity 0.5s ease-in-out;
+}
+
+#intro-page {
+  background-image: url(assets/emoji-background.jpg);
+
+  /* Prevents the image from repeating/tiling */
+  background-repeat: no-repeat;
+
+  /* Centers the background image perfectly */
+  background-position: center center;
+
+  /* Scales the image smoothly to fill the screen while maintaining proportions */
+  background-size: cover;
+
+  /* Optional: Matches the edges perfectly if there is any extra whitespace */
+  background-color: #d664fe;
+
+  /* Clears default browser outer spacing */
+  margin: 0;
+
+  /* Ensures the body element expands to the full height of your laptop screen */
+  min-height: 100vh;
+}
+
+.page.active {
+  /* Only the active page will take up screen space */
+  display: flex;
+  opacity: 1;
+}
+
+h1 {
+  font-size: 100px;
+  color: white;
+  text-shadow: 0 0 30px #ab15e7;
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+/* Colour tokens — override to re-skin the effect:
+   --ink    main text colour (defaults to currentColor)
+   --ink-2  primary accent   --ink-3  secondary accent */
+:root {
+  --ink: currentColor;
+  --ink-2: #9337ac;
+  --ink-3: #7ec3f5;
+}
+
+/* 01 Borealis — aurora gradient drifting through the letters */
+.fx-aurora {
+  font:
+    600 100px/1.1 "Helvetica",
+    monospace;
+  letter-spacing: 0.03em;
+  /* :root selector makes these variables available throughout the document.
+Later, var(--ink-2) retrieves the pink value, and var(--ink-3) retrieves the cyan value. */
+  background: linear-gradient(
+      115deg,
+      var(--ink-2),
+      var(--ink-3),
+      var(--ink-2),
+      var(--ink-3)
+    )
+    0 0 / 300% 100%;
+
+  /* background-clip: text tells the browser to show the background through the shape of the text.
+-webkit-background-clip: text is the prefixed version used for compatibility with browsers that support the WebKit-prefixed property.
+color: transparent makes the normal text colour transparent so that the gradient behind it can show through. */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* fx-aurora is the animation's name.
+7s means one cycle takes seven seconds.
+linear means the animation progresses at a constant rate.
+infinite means it repeats continuously. */
+  animation: fx-aurora 12s linear infinite;
+}
+
+/* background-position changes which part of the oversized gradient appears behind the text.
+hue-rotate() shifts the colours around the colour wheel. A full rotation of 360deg returns to the original hue.
+The browser interpolates between the start and end values, so the changes happen gradually. */
+@keyframes fx-aurora {
+  0% {
+    background-position: 0% 50%;
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    background-position: 300% 50%;
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* overflow-wrap: anywhere lets long text wrap if it needs to, rather than forcing it to overflow.
+background-image replaces the earlier gradient with a simpler pink–cyan–pink gradient at 90deg, which is horizontal. */
+.fx-aurora-brand {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  background-image: linear-gradient(
+    90deg,
+    var(--ink-2),
+    var(--ink-3),
+    var(--ink-2)
+  );
+  background-size: 400% 100%;
+  animation: fx-aurora-brand 12s linear infinite;
+}
+
+/* from means the beginning of the animation.
+to means the end.
+The 400% destination corresponds to the oversized background used by .fx-aurora-brand.
+Unlike the first animation, this one doesn't animate hue-rotate().
+It only moves the gradient background. */
+@keyframes fx-aurora-brand {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 400% 50%;
+  }
+}
+
+/* It essentially says: if the browser supports neither version of background clipping to text, use a normal text colour instead.
+That way, a browser that can't display the gradient text still shows readable text rather than invisible letters. */
+@supports not ((background-clip: text) or (-webkit-background-clip: text)) {
+  .fx-aurora-brand {
+    background: none;
+    color: var(--ink);
+  }
+}
+
+/* This checks whether the visitor's device is set to prefer reduced motion.
+If it is, the gradient animation is switched off. This is an accessibility feature for people who find movement distracting or uncomfortable. */
+@media (prefers-reduced-motion: reduce) {
+  .fx-aurora-brand {
+    animation: none;
+  }
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+  margin-top: 20px;
+}
+
+.mood-button {
+  background-color: antiquewhite;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  border: 3px inset rgb(179, 91, 176);
+  border-radius: 20px;
+}
+
+#happy:hover {
+  background-color: rgb(224, 224, 94);
+  border: 3px solid yellow;
+  transition: 0.3s ease;
+  box-shadow: 8px 8px 20px 0 rgb(159, 173, 2);
+  cursor: pointer;
+}
+
+#calm:hover {
+  background-color: rgb(108, 150, 240);
+  border: 3px solid blue;
+  transition: 0.3s ease;
+  box-shadow: 8px 8px 20px 0 rgb(24, 125, 168);
+  cursor: pointer;
+}
+
+#focused:hover {
+  background-color: rgb(236, 113, 91);
+  border: 3px solid red;
+  transition: 0.3s ease;
+  box-shadow: 8px 8px 20px 0 rgb(207, 54, 12);
+  cursor: pointer;
+}
+
+.emoji {
+  font-size: 60px;
+}
+
+.label {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+#second-page {
+  background-image: url(assets/calm.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-color: slateblue;
+  /* Clears default browser outer spacing */
+  margin: 0;
+  /* Ensures the body element expands to the full height of your laptop screen */
+  min-height: 100vh;
+}
+
+#second-page p {
+  color: black;
+  font-size: 50px;
+  font-weight: bolder;
+  font-family: "Sofia", sans-serif;
+  margin-bottom: 80px;
+  text-align: center;
+  text-shadow:
+    0 0 5px darkblue,
+    0 0 15px aqua;
+  /* Fade the card in and move it into place when the page loads. */
+  opacity: 0;
+  transform: translateY(-16px);
+  animation: fade-in-up 6000ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes fade-in-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Skip the animation and show the card immediately. */
+  .card {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+#second-page span {
+  font-size: 150px;
+  margin-bottom: 50px;
+  animation: calmEmojiAnimation 5s 1s infinite forwards;
+}
+
+#second-page button {
+  padding: 20px;
+  font-size: 25px;
+  border: 5px inset white;
+  border-radius: 32px;
+  color: rgb(2, 8, 202);
+  background-color: rgb(130, 200, 243);
+  font-family: "Permanent Marker", Courier, monospace;
+}
+
+#second-page button:hover {
+  background-color: aqua;
+  border: 5px dotted blue;
+  cursor: pointer;
+}
+
+#third-page {
+  background-color: rgb(254, 213, 33);
+  background-image: url(assets/happy.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  /* Clears default browser outer spacing */
+  margin: 0;
+  /* Ensures the body element expands to the full height of your laptop screen */
+  min-height: 100vh;
+}
+
+#third-page p {
+  font-size: 30px;
+  font-family: "Ribeye", Courier, monospace;
+  color: whitesmoke;
+  text-shadow: 0 0 14px #f5d903;
+  margin-top: 10px;
+  animation: happyTextAnimation 3s forwards;
+}
+
+#third-page button {
+  color: rgb(244, 180, 3);
+  background-color: rgb(244, 244, 143);
+  padding: 20px;
+  font-size: 25px;
+  font-family: "instrument sans", Courier, monospace;
+  border: 5px solid rgb(244, 180, 3);
+  border-radius: 30px;
+  margin-top: 40px;
+}
+
+#third-page button:hover {
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+  border: 5px outset rgb(244, 244, 143);
+}
+
+#third-page span {
+  font-size: 150px;
+  animation: happyEmojiAnimation 4s infinite alternate;
+}
+
+#fourth-page {
+  background-color: palevioletred;
+  background-image: url(assets/focused.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  /* Clears default browser outer spacing */
+  margin: 0;
+  /* Ensures the body element expands to the full height of your laptop screen */
+  min-height: 100vh;
+}
+
+#fourth-page button {
+  color: white;
+  background-color: red;
+  padding: 20px;
+  font-size: 25px;
+  font-family: "Salsa", Courier, monospace;
+  border: 5px solid red;
+  border-radius: 30px;
+  margin-top: 40px;
+}
+
+#fourth-page button:hover {
+  cursor: pointer;
+  font-weight: bold;
+  background-color: white;
+  color: red;
+}
+
+#fourth-page p {
+  font-size: 40px;
+  font-family: "Kalnia", Courier, monospace;
+  color: whitesmoke;
+  text-shadow: 0 0 14px #f54b03;
+  margin-top: 10px;
+  animation: focusedTextAnimation 2s forwards;
+}
+
+#fourth-page span {
+  font-size: 150px;
+  margin-top: 40px;
+  margin-bottom: 30px;
+  animation: focusedEmojiAnimation 2.2s infinite alternate;
+}
+
+@keyframes calmEmojiAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes focusedEmojiAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2); /* Grows to 105% size */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes focusedTextAnimation {
+  0%{transform: translateY(18px);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+}
+}
+
+@keyframes happyEmojiAnimation {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(30px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+@keyframes happyTextAnimation {
+  0% {
+    opacity: 0.3;
+    text-shadow: 0 0 10px rgba(255,255,255,0);
+  }
+  100% {
+    opacity: 1;
+    color: #ffff00;
+    text-shadow: 0 0 10px #e7ecec, 0 0 20px #f2f3f3, 0 0 40px #f1f4f4;
+  }
+}
